@@ -16,10 +16,10 @@ public class LogEntry {
 
     protected Date date; // date of entry
     protected String station; // gas station
-    protected Double odometer; // odometer reading (km)
+    protected Double odometer = 0.0; // odometer reading (km)
     protected String grade; // fuel grade
-    protected Double amount; // amount of fuel (L)
-    protected Double unitCost; // cost of fuel (cents/L)
+    protected Double amount = 0.0; // amount of fuel (L)
+    protected Double unitCost = 0.0; // cost of fuel (cents/L)
 
     // create new LogEntry for some date
     public LogEntry(Date date) {
@@ -37,8 +37,12 @@ public class LogEntry {
         return formatter.format(date);
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.date = formatter.parse(date);
+        } catch (Exception e) {}
+
     }
 
     public String getStation() {

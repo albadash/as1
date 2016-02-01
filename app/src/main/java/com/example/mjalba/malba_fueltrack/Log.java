@@ -35,13 +35,19 @@ public class Log {
         return log.contains(entry);
     }
 
-    // gets the total fuel cost of all the entries as a string
-    public String getTotalCost() {
+    // gets the total fuel cost of all the entries
+    public Double getTotalCostValue() {
         Double total = 0.0;
         for (LogEntry entry : log) {
             total += entry.getCostValue();
         }
-        String costString = new DecimalFormat("#.00").format(total);
+        return total;
+    }
+
+    // gets the total fuel cost of all the entries as a string
+    public String getTotalCost() {
+        Double total = getTotalCostValue();
+        String costString = new DecimalFormat("0.00").format(total);
         return "$" + costString;
     }
 }

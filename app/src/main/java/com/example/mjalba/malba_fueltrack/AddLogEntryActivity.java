@@ -129,7 +129,7 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
 
         // create new entry and set fields
         LogEntry entry = new LogEntry();
-        //entry.setDate(new Date(date));
+        entry.setDate(date);
         entry.setStation(station);
         entry.setOdometer(odometer);
         entry.setGrade(grade);
@@ -153,7 +153,7 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
         Double unitCost = Double.parseDouble(unitCostField.getText().toString());
 
         // update log entry at provided index
-        //log.getLog().get(index).setDate(new Date(date));
+        log.getLog().get(index).setDate(date);
         log.getLog().get(index).setStation(station);
         log.getLog().get(index).setOdometer(odometer);
         log.getLog().get(index).setGrade(grade);
