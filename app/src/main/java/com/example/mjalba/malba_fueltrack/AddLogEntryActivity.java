@@ -3,26 +3,18 @@ package com.example.mjalba.malba_fueltrack;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -31,7 +23,7 @@ import java.util.Date;
  * This class handles activity on the Add Entry screen of the app
  * (where users may add a new entry).
  */
-public class AddLogEntryActivity extends AppCompatActivity {
+public class AddLogEntryActivity extends LogAppCompatActivity {
 
     private static final String SAVEFILE = "file.sav"; // local save file name
     private Log log = new Log(); // the current fuel log
@@ -57,9 +49,24 @@ public class AddLogEntryActivity extends AppCompatActivity {
         amountField = (EditText) findViewById(R.id.amount);
         unitCostField = (EditText) findViewById(R.id.unit_cost);
 
-        // set current date
+        // get edit information
+        Intent intent = getIntent();
+        final Integer editIndex = intent.getIntExtra("editIndex", -1);
+
+        // set date formatter
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        dateField.setText(formatter.format(new Date()));
+
+        // set fields whether adding or editing
+        if (editIndex == -1) {
+            dateField.setText(formatter.format(new Date()));
+        } else {
+            dateField.setText(log.getLog().get(editIndex).getDate());
+            stationField.setText(log.getLog().get(editIndex).getStation());
+            odometerField.setText(log.getLog().get(editIndex).getOdometer());
+            gradeField.setText(log.getLog().get(editIndex).getGrade());
+            amountField.setText(log.getLog().get(editIndex).getAmount());
+            unitCostField.setText(log.getLog().get(editIndex).getUnitCost());
+        }
 
         // handle saving new entries
         FloatingActionButton saveButton = (FloatingActionButton) findViewById(R.id.saveButton);
@@ -68,24 +75,11 @@ public class AddLogEntryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setResult(RESULT_OK);
 
-                String date = dateField.getText().toString();
-                String station = stationField.getText().toString();
-                Double odometer = Double.parseDouble(odometerField.getText().toString());
-                String grade = gradeField.getText().toString();
-                Double amount = Double.parseDouble(amountField.getText().toString());
-                Double unitCost = Double.parseDouble(unitCostField.getText().toString());
-
-                LogEntry entry = new LogEntry();
-                //entry.setDate(new Date(date));
-                entry.setStation(station);
-                entry.setOdometer(odometer);
-                entry.setGrade(grade);
-                entry.setAmount(amount);
-                entry.setUnitCost(unitCost);
-
-                log.addEntry(entry);
-                saveInFile();
-                finish();
+                if (editIndex == -1) {
+                    addNewEntry();
+                } else {
+                    editEntry(editIndex);
+                }
             }
         });
 
@@ -107,26 +101,48 @@ public class AddLogEntryActivity extends AppCompatActivity {
         loadFromFile(); // load log
     }
 
-    // load fuel log from save file
-    // code based on in-class LonelyTwitter example, the original source code for which
-    // can be found at https://github.com/joshua2ua/lonelyTwitter
-    private void loadFromFile() {
-        try {
-            FileInputStream fis = openFileInput(SAVEFILE);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
+    // add a new entry to the fuel log
+    private void addNewEntry() {
 
-            // taken from https://googlecode.com/svn/trunk/gson/docs/javadocs
-            Type listType = new TypeToken<ArrayList<LogEntry>>() {}.getType();
-            log.setLog((ArrayList<LogEntry>) gson.fromJson(in, listType));
+        String date = dateField.getText().toString();
+        String station = stationField.getText().toString();
+        Double odometer = Double.parseDouble(odometerField.getText().toString());
+        String grade = gradeField.getText().toString();
+        Double amount = Double.parseDouble(amountField.getText().toString());
+        Double unitCost = Double.parseDouble(unitCostField.getText().toString());
 
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            log.setLog(new ArrayList<LogEntry>());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
-        }
+        LogEntry entry = new LogEntry();
+        //entry.setDate(new Date(date));
+        entry.setStation(station);
+        entry.setOdometer(odometer);
+        entry.setGrade(grade);
+        entry.setAmount(amount);
+        entry.setUnitCost(unitCost);
+
+        log.addEntry(entry);
+        saveInFile();
+        finish();
+    }
+
+    // edit an existing entry in the fuel log
+    private void editEntry(Integer index) {
+
+        String date = dateField.getText().toString();
+        String station = stationField.getText().toString();
+        Double odometer = Double.parseDouble(odometerField.getText().toString());
+        String grade = gradeField.getText().toString();
+        Double amount = Double.parseDouble(amountField.getText().toString());
+        Double unitCost = Double.parseDouble(unitCostField.getText().toString());
+
+        //log.getLog().get(index)..setDate(new Date(date));
+        log.getLog().get(index).setStation(station);
+        log.getLog().get(index).setOdometer(odometer);
+        log.getLog().get(index).setGrade(grade);
+        log.getLog().get(index).setAmount(amount);
+        log.getLog().get(index).setUnitCost(unitCost);
+
+        saveInFile();
+        finish();
     }
 
     // save fuel log to save file

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * This class represents an entire Fuel Log of Log Entries. Its purpose is
  * to keep track of all the user's Entries, as well as manage their Fuel Log
- * (by viewing Entries, adding new ones, editing old ones, etc).
+ * (by viewing Entries, adding new ones, etc).
  */
 public class Log implements Serializable {
 

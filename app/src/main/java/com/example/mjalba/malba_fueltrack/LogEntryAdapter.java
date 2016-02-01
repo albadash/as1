@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class LogEntryAdapter extends ArrayAdapter<LogEntry> {
         gradeView.setText(Html.fromHtml(gradeString));
         dateStationView.setText(Html.fromHtml(dateStationString));
         odometerView.setText(Html.fromHtml(odometerString));
+
+        Button editButton = (Button) logEntryView.findViewById(R.id.edit_button);
+        editButton.setTag(index); // unique tag representing array index
 
         return logEntryView;
     }

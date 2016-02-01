@@ -51,7 +51,7 @@ public class LogEntry implements Serializable {
 
     // returns the odometer reading of this log entry, nicely formatted
     public String getOdometer() {
-        String odometerString = new DecimalFormat("#.0").format(amount);
+        String odometerString = new DecimalFormat("#.0").format(odometer);
         return odometerString;
     }
 

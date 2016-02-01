@@ -2,6 +2,7 @@
     <string name="app_name">malba-FuelTrack</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_log">Add New Fuel Log Entry</string>
+    <string name="title_activity_edit_log">Edit Fuel Log Entry</string>
     <string name="date_heading">Date</string>
     <string name="date_hint">yyyy-mm-dd</string>
     <string name="station_heading">Fuel Station</string>
