@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">malba-FuelTrack</string>
     <string name="action_settings">Settings</string>
+    <string name="total_cost_header">Total Fuel Cost</string>
     <string name="title_activity_add_log">Add New Fuel Log Entry</string>
     <string name="title_activity_edit_log">Edit Fuel Log Entry</string>
     <string name="date_heading">Date</string>
@@ -16,4 +17,5 @@
     <string name="unit_cost_heading">Fuel Cost (cents/L)</string>
     <string name="unit_cost_hint">up to 1 decimal place</string>
     <string name="button_edit_entry">Edit Log Entry</string>
+    <string name="bad_data_warning">Uh oh! One or more of your fields isn\'t properly filled out.</string>
 </resources>

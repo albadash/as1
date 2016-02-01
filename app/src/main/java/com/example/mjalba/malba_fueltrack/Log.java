@@ -1,6 +1,7 @@
 package com.example.mjalba.malba_fueltrack;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * to keep track of all the user's Entries, as well as manage their Fuel Log
  * (by viewing Entries, adding new ones, etc).
  */
-public class Log implements Serializable {
+public class Log {
 
     protected static ArrayList<LogEntry> log = new ArrayList<LogEntry>();
 
@@ -32,5 +33,15 @@ public class Log implements Serializable {
     // checks if an entry is in the log
     public boolean hasEntry(LogEntry entry) {
         return log.contains(entry);
+    }
+
+    // gets the total fuel cost of all the entries as a string
+    public String getTotalCost() {
+        Double total = 0.0;
+        for (LogEntry entry : log) {
+            total += entry.getCostValue();
+        }
+        String costString = new DecimalFormat("#.00").format(total);
+        return "$" + costString;
     }
 }

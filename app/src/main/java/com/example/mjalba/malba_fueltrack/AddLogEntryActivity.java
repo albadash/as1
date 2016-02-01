@@ -3,6 +3,7 @@ package com.example.mjalba.malba_fueltrack;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Created by MJ Alba on 2016-01-31.
@@ -24,9 +27,6 @@ import java.util.Date;
  * (where users may add a new entry).
  */
 public class AddLogEntryActivity extends LogAppCompatActivity {
-
-    private static final String SAVEFILE = "file.sav"; // local save file name
-    private Log log = new Log(); // the current fuel log
 
     private EditText dateField;
     private EditText stationField;
@@ -60,6 +60,7 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
         if (editIndex == -1) {
             dateField.setText(formatter.format(new Date()));
         } else {
+            setTitle(R.string.title_activity_edit_log);
             dateField.setText(log.getLog().get(editIndex).getDate());
             stationField.setText(log.getLog().get(editIndex).getStation());
             odometerField.setText(log.getLog().get(editIndex).getOdometer());
@@ -75,7 +76,22 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
             public void onClick(View view) {
                 setResult(RESULT_OK);
 
-                if (editIndex == -1) {
+                // validate input data
+                Boolean goodData = true;
+                Scanner scanner = new Scanner(dateField.getText().toString());
+                goodData = goodData && scanner.hasNext("\\d{4}-\\d{2}-\\d{2}");
+                scanner = new Scanner(odometerField.getText().toString());
+                goodData = goodData && scanner.hasNextDouble();
+                scanner = new Scanner(amountField.getText().toString());
+                goodData = goodData && scanner.hasNextDouble();
+                scanner = new Scanner(unitCostField.getText().toString());
+                goodData = goodData && scanner.hasNextDouble();
+
+                // add, edit, or warn user about bad data
+                if (!goodData) {
+                    Snackbar.make(view, R.string.bad_data_warning, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                } else if (editIndex == -1) {
                     addNewEntry();
                 } else {
                     editEntry(editIndex);
@@ -111,6 +127,7 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
         Double amount = Double.parseDouble(amountField.getText().toString());
         Double unitCost = Double.parseDouble(unitCostField.getText().toString());
 
+        // create new entry and set fields
         LogEntry entry = new LogEntry();
         //entry.setDate(new Date(date));
         entry.setStation(station);
@@ -119,6 +136,7 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
         entry.setAmount(amount);
         entry.setUnitCost(unitCost);
 
+        // add entry, save, and return to main
         log.addEntry(entry);
         saveInFile();
         finish();
@@ -134,13 +152,15 @@ public class AddLogEntryActivity extends LogAppCompatActivity {
         Double amount = Double.parseDouble(amountField.getText().toString());
         Double unitCost = Double.parseDouble(unitCostField.getText().toString());
 
-        //log.getLog().get(index)..setDate(new Date(date));
+        // update log entry at provided index
+        //log.getLog().get(index).setDate(new Date(date));
         log.getLog().get(index).setStation(station);
         log.getLog().get(index).setOdometer(odometer);
         log.getLog().get(index).setGrade(grade);
         log.getLog().get(index).setAmount(amount);
         log.getLog().get(index).setUnitCost(unitCost);
 
+        // save and return to main
         saveInFile();
         finish();
     }

@@ -6,8 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by MJ Alba on 2016-01-31.
@@ -19,6 +19,7 @@ public class MainActivity extends LogAppCompatActivity {
 
     private ListView logList; // view to display the current fuel log
     private LogEntryAdapter adapter; // log entry adapter
+    private TextView totalCost; // total cost of fuel
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends LogAppCompatActivity {
         setSupportActionBar(toolbar);
 
         logList = (ListView) findViewById(R.id.logList);
+        totalCost = (TextView) findViewById(R.id.total_cost);
     }
 
     @Override
@@ -36,6 +38,7 @@ public class MainActivity extends LogAppCompatActivity {
         loadFromFile();
         adapter = new LogEntryAdapter(this, Log.getLog());
         logList.setAdapter(adapter);
+        totalCost.setText(log.getTotalCost());
     }
 
     @Override

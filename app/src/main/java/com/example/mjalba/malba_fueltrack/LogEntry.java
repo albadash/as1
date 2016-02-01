@@ -12,7 +12,7 @@ import java.util.Date;
  * to hold all data necessary for a log entry, and will allow more information
  * to be added to log entries in the future should the need arise.
  */
-public class LogEntry implements Serializable {
+public class LogEntry {
 
     protected Date date; // date of entry
     protected String station; // gas station
@@ -88,8 +88,13 @@ public class LogEntry implements Serializable {
     }
 
     // returns the total cost (in dollars) of the fuel in this LogEntry
+    public Double getCostValue() {
+        return amount * (unitCost / 100);
+    }
+
+    // returns a string of the total cost (in dollars) of the fuel in this LogEntry
     public String getCost() {
-        Double totalCost = amount * (unitCost / 100);
+        Double totalCost = getCostValue();
         String costString = new DecimalFormat("#.00").format(totalCost);
         return "$" + costString;
     }
