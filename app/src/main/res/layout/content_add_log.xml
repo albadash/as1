@@ -13,6 +13,26 @@
     tools:context="com.example.mjalba.malba_fueltrack.AddLogEntryActivity"
     tools:showIn="@layout/activity_add_log">
 
+    <TextView
+        android:text="@string/date_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/date"
+        android:inputType="text"
+        android:hint="@string/date_hint"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal" />
+
+    <TextView
+        android:text="@string/station_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/station"
         android:inputType="text"
@@ -20,6 +40,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="horizontal" />
+
+    <TextView
+        android:text="@string/odometer_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/odometer"
@@ -29,6 +55,12 @@
         android:layout_height="wrap_content"
         android:scrollbars="horizontal" />
 
+    <TextView
+        android:text="@string/grade_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/grade"
         android:inputType="text"
@@ -37,6 +69,12 @@
         android:layout_height="wrap_content"
         android:scrollbars="horizontal" />
 
+    <TextView
+        android:text="@string/amount_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/amount"
         android:inputType="numberDecimal"
@@ -44,6 +82,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="horizontal" />
+
+    <TextView
+        android:text="@string/unit_cost_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/unit_cost"

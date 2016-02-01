@@ -1,5 +1,6 @@
 package com.example.mjalba.malba_fueltrack;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Date;
  * to hold all data necessary for a log entry, and will allow more information
  * to be added to log entries in the future should the need arise.
  */
-public class LogEntry {
+public class LogEntry implements Serializable {
 
     protected Date date; // date of entry
     protected String station; // gas station
@@ -88,7 +89,7 @@ public class LogEntry {
 
     // returns the total cost (in dollars) of the fuel in this LogEntry
     public String getCost() {
-        Double totalCost = amount * unitCost;
+        Double totalCost = amount * (unitCost / 100);
         String costString = new DecimalFormat("#.00").format(totalCost);
         return "$" + costString;
     }

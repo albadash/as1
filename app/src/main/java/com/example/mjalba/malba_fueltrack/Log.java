@@ -1,5 +1,6 @@
 package com.example.mjalba.malba_fueltrack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,11 +10,19 @@ import java.util.ArrayList;
  * to keep track of all the user's Entries, as well as manage their Fuel Log
  * (by viewing Entries, adding new ones, editing old ones, etc).
  */
-public class Log {
+public class Log implements Serializable {
 
-    protected ArrayList<LogEntry> log = new ArrayList<LogEntry>();
+    protected static ArrayList<LogEntry> log = new ArrayList<LogEntry>();
 
-    // VIEW ENTRIES?
+    // gets the log array list
+    public static ArrayList<LogEntry> getLog() {
+        return log;
+    }
+
+    // sets the log array list
+    public static void setLog(ArrayList<LogEntry> log) {
+        Log.log = log;
+    }
 
     // adds a LogEntry to the Log
     public void addEntry(LogEntry entry) {
